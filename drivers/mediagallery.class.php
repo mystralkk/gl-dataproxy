@@ -49,7 +49,9 @@ class dpxyDriver_Mediagallery extends dpxyDriver
 		static $retval = null;
 		
 		if ($retval === null) {
-			if (array_key_exists('mg_config', $_TABLES)) {
+			if (array_key_exists('loginrequired', $_MG_CONF)) {
+				$retval = $_MG_CONF['loginrequired'];
+			} else {
 				$sql = "SELECT config_value "
 					 . "  FROM {$_TABLES['mg_config']} "
 					 . "WHERE (config_name = 'loginrequired')";
@@ -61,8 +63,6 @@ class dpxyDriver_Mediagallery extends dpxyDriver
 					$A = DB_fetchArray($result, false);
 					$retval = ((int) $A['config_value'] != 0);
 				}
-			} else {
-				$retval = $_MG_CONF['loginrequired'];
 			}
 		}
 		
